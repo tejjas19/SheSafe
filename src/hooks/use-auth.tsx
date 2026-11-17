@@ -9,11 +9,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_e, s) => { setSession(s); setLoading(false); });
-    supabase.auth.getSession().then(({ data: d }) => { setSession(d.session); setLoading(false); });
-    return () => data.subscription.unsubscribe();
-  }, []);
-  return <Ctx.Provider value={{ session, user: session?.user ?? null, loading }}>{children}</Ctx.Provider>;
+ 
+useEffect(() => {
+  let mounted = true;
+
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (mounted) {
+      setSession(session);
+      setLoading(false);
+    }
+  });
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    if (mounted) {
+      setSession(session);
+      setLoading(false);
+    }
+  });
+
+  return () => {
+    mounted = false;
+    subscription.unsubscribe();
+  };
+}, []);
+ return <Ctx.Provider value={{ session, user: session?.user ?? null, loading }}>{children}</Ctx.Provider>;
 }
 
 export const useAuth = () => useContext(Ctx);
