@@ -8,8 +8,7 @@ const Ctx = createContext<AuthCtx>({ session: null, user: null, loading: true })
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
- 
+
 useEffect(() => {
   let mounted = true;
 

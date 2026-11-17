@@ -9,35 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/logo";
 
-
-useEffect(() => {
-  let active = true;
-  let authEventReceived = false;
-
-  const {
-    data: { subscription },
-  } = supabase.auth.onAuthStateChange((_event, session) => {
-    authEventReceived = true;
-
-    if (active) {
-      setSession(session);
-      setLoading(false);
-    }
-  });
-
-  supabase.auth.getSession().then(({ data }) => {
-    if (active && !authEventReceived) {
-      setSession(data.session);
-      setLoading(false);
-    }
-  });
-
-  return () => {
-    active = false;
-    subscription.unsubscribe();
-  };
-}, []);
-
+export const Route = createFileRoute("/auth")({
+  head: () => ({
+    meta: [
+      { title: "Sign in — SafeVoice" },
       {
         name: "description",
         content:
@@ -59,14 +34,14 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
-  const { user, loading } = useAuth();
+const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-  if (!loading && user) {
-    navigate({ to: "/dashboard" });
-  }
-}, [user, loading, navigate]);
+    if (user) {
+      navigate({ to: "/dashboard" });
+    }
+  }, [user, navigate]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
