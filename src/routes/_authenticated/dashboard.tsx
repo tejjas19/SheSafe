@@ -70,8 +70,7 @@ function Dashboard() {
             onClick={() => navigator.geolocation.getCurrentPosition(() => setGps("granted"), () => setGps("denied"))} />
           <StatusRow ok={contacts.length > 0} icon={Hand} label="Safety circle" value={`${contacts.length} contacts`} to="/contacts" />
           <StatusRow ok={codeWords.length > 0} icon={Mic} label="Code words" value={`${codeWords.length} saved`} to="/code-words" />
-          <StatusRow ok={wearable.connected} icon={Bluetooth} label="Wearable" value={wearable.connected ? wearable.name : "Not paired"} to="/wearable" />
-
+          
           <div className="glass rounded-2xl p-4">
             <p className="text-sm font-semibold">Test the AI (no mic needed)</p>
             <form className="mt-2 flex gap-2" onSubmit={(e) => { e.preventDefault(); if (test.trim()) { guard.testPhrase(test); setTest(""); } }}>
