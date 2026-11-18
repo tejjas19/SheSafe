@@ -23,7 +23,10 @@ function ProfilePage() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    const { error } = await supabase.from("profiles").update(f).eq("id", user!.id);
+    const { error } = await supabase.from("profiles").upsert(
+  { ...f, id: user!.id },
+  { onConflict: "id" }
+);
     if (error) toast.error(error.message); else { toast.success("Profile saved"); refresh(); }
   }
   function toggleGps(on: boolean) {
