@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { Bluetooth, History, KeyRound, LogOut, Shield, User, Users } from "lucide-react";
+import { History, KeyRound, LogOut, Shield, User, Users } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { SafetyProvider, useSafety } from "@/hooks/use-safety";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,7 +13,6 @@ const nav = [
   { to: "/dashboard", label: "SOS", icon: Shield },
   { to: "/contacts", label: "Circle", icon: Users },
   { to: "/code-words", label: "Code words", icon: KeyRound },
-  { to: "/wearable", label: "Wearable", icon: Bluetooth },
   { to: "/history", label: "History", icon: History },
   { to: "/profile", label: "Profile", icon: User },
 ] as const;
