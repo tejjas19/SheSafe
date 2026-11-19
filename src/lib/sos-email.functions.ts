@@ -9,8 +9,7 @@ export const sendSosEmails = createServerFn({ method: "POST" })
     z.object({ message: z.string().min(1).max(4000) }).parse(d)
   )
   .handler(async ({ data, context }) => {
-   const RESEND_API_KEY = process.env["RESEND_API_KEY"];
-
+ const RESEND_API_KEY = process.env["RESEND_API_KEY"];
     if (!RESEND_API_KEY) {
       return { sent: 0, failed: 0, error: "RESEND_API_KEY is not configured" };
     }
