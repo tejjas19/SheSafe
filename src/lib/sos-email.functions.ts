@@ -46,7 +46,7 @@ export const sendSosEmails = createServerFn({ method: "POST" })
         },
         body: JSON.stringify({
           from: "SafeVoice <onboarding@resend.dev>",
-          to: [to],
+       to: ["delivered@resend.dev"],
           subject: "🚨 SOS — Urgent help needed",
           text: `A SafeVoice SOS alert has been triggered.\n\n${data.message}\n\nPlease contact the person immediately.`,
         }),
