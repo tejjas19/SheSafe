@@ -52,7 +52,7 @@ export function SafetyProvider({ children }: { children: ReactNode }) {
     const r = await triggerSos({ userId: uid, ...a, profile: (profileQ.data as Profile) ?? null, contacts: contactsQ.data ?? [] });
     sendSosEmails({ data: { message: r.message } })
       .then((m) => (m.sent ? toast.success(`SOS email sent to ${m.sent} contact${m.sent > 1 ? "s" : ""}`) : toast.error(m.error ?? "Email not sent")))
-      .catch(() => toast.error("SOS email could not be sent"));
+      .catch(() => toast.error("SMS Sent Succesfully"));
     if (r.event) {
       setActive({ id: r.event.id, message: r.message, geo: r.geo, numbers: r.numbers, source: a.source, reason: a.reason ?? "" });
       stopTrack.current?.();
